@@ -5,13 +5,15 @@ import Navbar from "./components/navigation/Navbar";
 import { RoverApi } from "./components/RoverApi";
 import FiltersModal from "./components/ui/modals/FiltersModal";
 import RoverDetailView from "./components/ui/rover/RoverDetailView";
+import ManifestModal from "./components/ui/modals/ManifestModal";
 
 class App extends Component {
   state = {
-    data: null,
+    data: [],
     page: 1,
     rover: "curiosity",
-    modal: false,
+    filtersModal: false,
+    manifestModal: false,
     earth_date: "",
     camera: "All"
   };
@@ -37,7 +39,7 @@ class App extends Component {
     });
 
     //update state
-    this.setState({ rover, data });
+    this.setState({ rover, data: data.photos });
   };
 
   onSelectPage = async id => {
@@ -48,7 +50,7 @@ class App extends Component {
 
     //update if data available for page
     if (data.photos.length !== 0) {
-      this.setState({ page: id, data });
+      this.setState({ page: id, data: data.photos });
     }
   };
 
@@ -71,33 +73,47 @@ class App extends Component {
     let data = await RoverApi.getRoverDataByCamera(camera, earth_date, rover);
 
     //update state
-    this.setState({ camera, data });
+    this.setState({ camera, data: data.photos });
   };
 
   render() {
-    const { data, modal, earth_date, rover, camera } = this.state;
+    const {
+      data,
+      filtersModal,
+      manifestModal,
+      earth_date,
+      rover,
+      camera
+    } = this.state;
     return (
       <div className="App">
         <Navbar
           activeKey={rover}
           onSelect={rover => this.getDataByRover(earth_date, rover)}
-          onSelectFilters={() => this.setState({ modal: true })}
+          onSelectFilters={() => this.setState({ filtersModal: true })}
+          manifestDisabled={data.length === 0}
+          onSelectManifest={() => this.setState({ manifestModal: true })}
         />
         <Container className="main-container">
           <FiltersModal
-            show={modal}
-            handleClose={() => this.setState({ modal: false })}
+            show={filtersModal}
+            handleClose={() => this.setState({ filtersModal: false })}
             earth_date={earth_date}
             onDateChange={this.onDateChange}
             camera={camera}
             onCameraChange={e => this.onCameraChange(e.target.value)}
           />
-          {data && (
-            <RoverDetailView
-              onSelectPage={e => this.onSelectPage(e.target.id)}
-              photos={data.photos}
+          {data[0] && (
+            <ManifestModal
+              data={data[0].rover}
+              show={manifestModal}
+              handleClose={() => this.setState({ manifestModal: false })}
             />
           )}
+          <RoverDetailView
+            onSelectPage={e => this.onSelectPage(e.target.id)}
+            photos={data}
+          />
         </Container>
       </div>
     );

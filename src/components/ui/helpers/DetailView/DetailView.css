@@ -1,11 +1,11 @@
-.card-data-container {
+.detail-container {
   display: flex;
 }
 
-.data-title {
+.detail-title {
   font-weight: bold;
 }
 
-.data-section {
+.detail-section {
   display: block;
 }

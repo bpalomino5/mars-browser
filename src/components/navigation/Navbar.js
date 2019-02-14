@@ -3,7 +3,13 @@ import { Navbar, Nav, Button, Form } from "react-bootstrap";
 
 export default class MarsNavbar extends Component {
   render() {
-    const { onSelect, onSelectFilters, activeKey } = this.props;
+    const {
+      onSelect,
+      onSelectFilters,
+      activeKey,
+      manifestDisabled,
+      onSelectManifest
+    } = this.props;
     return (
       <Navbar
         collapseOnSelect
@@ -27,6 +33,14 @@ export default class MarsNavbar extends Component {
             </Nav.Item>
           </Nav>
           <Form inline>
+            <Button
+              style={{ marginRight: 10 }}
+              variant="outline-secondary"
+              disabled={manifestDisabled}
+              onClick={onSelectManifest}
+            >
+              Manifest
+            </Button>
             <Button variant="outline-info" onClick={onSelectFilters}>
               Filters
             </Button>

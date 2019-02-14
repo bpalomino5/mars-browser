@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 
-import RoverCard from "./RoverCard";
-import DefaultCard from "./DefaultCard";
+import RoverCard from "./RoverCard/RoverCard";
+import DefaultCard from "./DefaultCard/DefaultCard";
 
 import { CardDeck, Pagination } from "react-bootstrap";
 

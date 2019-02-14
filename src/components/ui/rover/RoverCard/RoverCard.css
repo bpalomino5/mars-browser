@@ -1,0 +1,11 @@
+.card-data-container {
+  display: flex;
+}
+
+.data-title {
+  font-weight: bold;
+}
+
+.data-section {
+  display: block;
+}

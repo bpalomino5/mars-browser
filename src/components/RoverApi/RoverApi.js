@@ -1,3 +1,4 @@
+//base request query to mars rover api
 export const getRoverData = async (roverType, params) => {
   //create base url
   let url = new URL(
@@ -15,15 +16,12 @@ export const getRoverData = async (roverType, params) => {
   return response.json();
 };
 
-export const getRoverDataByPage = async (id, page, earth_date, rover) => {
-  // handle page ids
-  if (id === "next") id = page + 1;
-  else if (id === "prev" && page > 1) id = page - 1;
-  id = parseInt(id);
-
+//query data via page parameter
+export const getRoverDataByPage = async (id, earth_date, rover) => {
   return await getRoverData(rover, { earth_date, page: id });
 };
 
+//query data via camera parameter
 export const getRoverDataByCamera = async (camera, earth_date, rover) => {
   // handle camera params
   let params = { earth_date };

@@ -1,6 +1,7 @@
 import React from "react";
-import { Card } from "react-bootstrap";
 import "./DefaultCard.css";
+
+import { Card } from "react-bootstrap";
 
 const DefaultCard = () => (
   <Card border="secondary" className="card-container">

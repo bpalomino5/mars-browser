@@ -35,7 +35,7 @@ export default class MarsNavbar extends Component {
           <Form inline>
             <Button
               style={{ marginRight: 10 }}
-              variant="outline-secondary"
+              variant={manifestDisabled ? "outline-secondary" : "secondary"}
               disabled={manifestDisabled}
               onClick={onSelectManifest}
             >

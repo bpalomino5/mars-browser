@@ -1,4 +1,5 @@
 import React from "react";
+
 import { Card } from "react-bootstrap";
 import DetailView from "../../helpers/DetailView/DetailView";
 

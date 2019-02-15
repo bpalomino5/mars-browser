@@ -1,11 +1,15 @@
 import React, { Component } from "react";
 import "./App.css";
+
+//tools
+import { RoverApi } from "./components/RoverApi";
+
+//components
 import { Container } from "react-bootstrap";
 import Navbar from "./components/navigation/Navbar";
-import { RoverApi } from "./components/RoverApi";
-import FiltersModal from "./components/ui/modals/FiltersModal";
-import RoverDetailView from "./components/ui/rover/RoverDetailView";
+import FiltersModal from "./components/ui/modals/FiltersModal/FiltersModal";
 import ManifestModal from "./components/ui/modals/ManifestModal";
+import RoverDetailView from "./components/ui/rover/RoverDetailView";
 
 class App extends Component {
   state = {
@@ -45,8 +49,14 @@ class App extends Component {
   onSelectPage = async id => {
     const { earth_date, rover, page } = this.state;
 
+    // handle page ids
+    if (id === "next") id = page + 1;
+    else if (id === "prev" && page > 1) id = page - 1;
+    else return;
+    id = parseInt(id);
+
     // call api
-    let data = await RoverApi.getRoverDataByPage(id, page, earth_date, rover);
+    let data = await RoverApi.getRoverDataByPage(id, earth_date, rover);
 
     //update if data available for page
     if (data.photos.length !== 0) {
@@ -83,7 +93,8 @@ class App extends Component {
       manifestModal,
       earth_date,
       rover,
-      camera
+      camera,
+      page
     } = this.state;
     return (
       <div className="App">
@@ -113,6 +124,7 @@ class App extends Component {
           <RoverDetailView
             onSelectPage={e => this.onSelectPage(e.target.id)}
             photos={data}
+            page={page}
           />
         </Container>
       </div>

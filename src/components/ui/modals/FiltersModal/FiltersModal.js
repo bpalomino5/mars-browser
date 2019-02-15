@@ -1,36 +1,36 @@
 import React, { Component } from "react";
+import "./FiltersModal.css";
+
+import { FormControl } from "react-bootstrap";
 import { Modal, Button } from "react-bootstrap";
 
 import DayPickerInput from "react-day-picker/DayPickerInput";
 import "react-day-picker/lib/style.css";
-import { FormControl } from "react-bootstrap";
 
-const FilterSelector = ({ type, children }) => (
-  <div
-    style={{
-      display: "flex",
-      justifyContent: "space-between",
-      marginBottom: 10
-    }}
-  >
-    <div style={{ marginRight: 10 }}>
-      <h5>{type}</h5>
-    </div>
+const FilterTitle = ({ title }) => (
+  <div className="filter-title">
+    <h5>{title}</h5>
+  </div>
+);
+
+const FilterSelector = ({ title, children }) => (
+  <div className="filter-container">
+    <FilterTitle title={title} />
     {children}
   </div>
 );
 
-const DateSelector = ({ earth_date, handleDayChange }) => (
-  <FilterSelector type="Date">
+const DateSelector = ({ earth_date, onDateChange }) => (
+  <FilterSelector title="Date">
     <DayPickerInput
       value={earth_date}
-      onDayChange={(s, m, input) => handleDayChange(input)}
+      onDayChange={(s, m, input) => onDateChange(input)}
     />
   </FilterSelector>
 );
 
 const CameraSelector = ({ camera, onCameraChange }) => (
-  <FilterSelector type="Camera">
+  <FilterSelector title="Camera">
     <FormControl as="select" value={camera} onChange={onCameraChange}>
       <option>All</option>
       <option>FHAZ</option>
@@ -62,10 +62,7 @@ export default class FiltersModal extends Component {
           <Modal.Title>Filters</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <DateSelector
-            earth_date={earth_date}
-            handleDayChange={onDateChange}
-          />
+          <DateSelector earth_date={earth_date} onDateChange={onDateChange} />
           <CameraSelector camera={camera} onCameraChange={onCameraChange} />
         </Modal.Body>
         <Modal.Footer>

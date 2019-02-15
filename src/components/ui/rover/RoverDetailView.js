@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 
+//components
 import RoverCard from "./RoverCard/RoverCard";
 import DefaultCard from "./DefaultCard/DefaultCard";
-
 import { CardDeck, Pagination } from "react-bootstrap";
 
 const RoverGallery = ({ photos }) => (
@@ -13,24 +13,20 @@ const RoverGallery = ({ photos }) => (
   </CardDeck>
 );
 
-const RoverPages = ({ onSelectPage }) => (
+const RoverPages = ({ onSelectPage, page }) => (
   <Pagination onClick={onSelectPage}>
     <Pagination.Item id="prev">{`‹`}</Pagination.Item>
-    <Pagination.Item id="1">{1}</Pagination.Item>
-    <Pagination.Item id="2">{2}</Pagination.Item>
-    <Pagination.Item id="3">{3}</Pagination.Item>
-    <Pagination.Item id="4">{4}</Pagination.Item>
-    <Pagination.Item id="5">{5}</Pagination.Item>
+    <Pagination.Item id="1">{page}</Pagination.Item>
     <Pagination.Item id="next">{`›`}</Pagination.Item>
   </Pagination>
 );
 
 export default class RoverDetailView extends Component {
   render() {
-    const { onSelectPage, photos } = this.props;
+    const { onSelectPage, photos, page } = this.props;
     return (
       <>
-        <RoverPages onSelectPage={onSelectPage} />
+        <RoverPages onSelectPage={onSelectPage} page={page} />
         <RoverGallery photos={photos} />
       </>
     );
